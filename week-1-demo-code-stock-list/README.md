@@ -2,7 +2,7 @@
 
 ## About
 
-This project contains a simple counter app.
+This project contains a simple stock app.
 
 Run the following to get started:
 
