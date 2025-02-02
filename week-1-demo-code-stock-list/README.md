@@ -10,4 +10,7 @@ Run the following to get started:
 
 `npm run dev`
 
-The main file is: `src/App.vue`
+The main files are:
+
+- `src/App.vue`
+- `src/components/StockList.vue`
