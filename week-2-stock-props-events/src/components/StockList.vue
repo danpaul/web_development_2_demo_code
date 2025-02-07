@@ -1,4 +1,6 @@
 <script>
+import StockItem from "./StockItem.vue";
+
 export default {
   data() {
     return {
@@ -10,6 +12,9 @@ export default {
         { name: "Gazprom", price: 4.583, previousPrice: 0, currency: "$" },
       ],
     };
+  },
+  components: {
+    StockItem,
   },
   mounted() {
     // save the interval so we can clean it up on unmount
@@ -35,42 +40,41 @@ export default {
         };
       });
     },
+    buyStock(name, quantity) {
+      alert(`Purchased ${quantity} ${name} stocks`);
+    },
   },
 };
 </script>
 
 <template>
-  <table>
+  <table class="table">
     <thead>
       <tr>
         <th>Stock Name</th>
         <th>Price</th>
         <th>Previous Price</th>
+        <th>Buy</th>
       </tr>
     </thead>
     <tbody>
-      <tr
-        v-for="(stock, index) in stocks"
-        :key="index"
-        :class="{
-          'price-increase': stock.price >= stock.previousPrice,
-          'price-decrease': stock.price < stock.previousPrice,
-        }"
-      >
-        <td>{{ stock.name }}</td>
-        <td>{{ stock.currency }}{{ stock.price.toFixed(2) }}</td>
-        <td>{{ stock.currency }}{{ stock.previousPrice.toFixed(2) }}</td>
-      </tr>
+      <StockItem
+        v-for="stock in stocks"
+        :key="stock.name"
+        :name="stock.name"
+        :price="stock.price"
+        :previousPrice="stock.previousPrice"
+        :currency="stock.currency"
+        @buyStock="buyStock"
+      ></StockItem>
+      <!-- alternatively, we could just spread the stock properties -->
+      <!-- we can do this because StockItem props match the stock object properties -->
+      <!-- <StockItem {...stock} /> -->
     </tbody>
   </table>
-  <button @click="randomizePrices">Randomize Prices</button>
+  <button @click="randomizePrices" class="btn btn-primary">
+    Randomize Prices
+  </button>
 </template>
 
-<style lang="css" scoped>
-.price-increase {
-  color: green;
-}
-.price-decrease {
-  color: red;
-}
-</style>
+<style lang="css" scoped></style>
