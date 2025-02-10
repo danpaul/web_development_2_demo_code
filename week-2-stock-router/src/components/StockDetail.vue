@@ -18,7 +18,7 @@ export default {
 
 <template>
   <h1>{{ stock.name }} Details</h1>
-  <h2>Price: {{ stock.price }}</h2>
+  <h2>Price: {{ stock.currency }}{{ stock.price.toFixed(2) }}</h2>
 </template>
 
 <style lang="css" scoped></style>

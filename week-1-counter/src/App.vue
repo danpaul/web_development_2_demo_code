@@ -1,7 +1,6 @@
 <script>
 export default {
   data() {
-    console.log("in data");
     return {
       count: 0,
     };
