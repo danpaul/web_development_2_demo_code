@@ -17,7 +17,6 @@ export default {
     };
   },
   async mounted() {
-    console.log("mounted");
     await this.loadArticles();
   },
   methods: {
@@ -37,7 +36,6 @@ export default {
         const results = await axios.get(
           `${API_ENDPOINTS.articles}?page=${this.currentPage}`
         );
-        console.log(results.data); //asdf
         this.articles = results.data;
       } catch (error) {
         console.error(error);
@@ -60,6 +58,15 @@ export default {
       this.currentPage--;
       await this.loadArticles();
     },
+
+    /**
+     * Deletes an article with the given ID
+     * @param {number} id - The ID of the article to delete
+     */
+    async deleteArticle(id) {
+      console.log(`Deleting article with ID: ${id}`);
+      console.error(new Error("Method not implemented"));
+    },
   },
 };
 </script>
@@ -77,6 +84,7 @@ export default {
           <th>Author</th>
           <th>Posted At</th>
           <th>Edit</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -91,6 +99,11 @@ export default {
               :to="`/articles/${article.id}`"
               >Edit</RouterLink
             >
+          </td>
+          <td>
+            <button class="btn btn-danger" @click="deleteArticle(article.id)">
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>

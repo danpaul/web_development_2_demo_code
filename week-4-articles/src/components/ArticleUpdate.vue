@@ -26,6 +26,7 @@ export default {
    */
   async mounted() {
     try {
+      this.isLoading = true;
       const response = await axios.get(
         `${API_ENDPOINTS.articles}/${this.articleId}`
       );
