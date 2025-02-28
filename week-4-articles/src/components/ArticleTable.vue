@@ -1,24 +1,29 @@
 <script>
 import axios from "axios";
+import { API_ENDPOINTS } from "@/config";
 
+/**
+ * @component ArticleTable
+ * @description A component that displays a paginated table of articles with edit functionality.
+ * The table shows article titles, authors, posting dates, and edit links.
+ */
 export default {
   data() {
     return {
-      interval: null,
-      articles: [],
-      isLoading: true,
-      error: null,
-      currentPage: 1,
+      articles: [], // Array of article objects
+      isLoading: true, // Loading state flag
+      error: null, // Error message storage
+      currentPage: 1, // Current page number for pagination
     };
   },
   async mounted() {
+    console.log("mounted");
     await this.loadArticles();
   },
-  beforeUnmount() {
-    // clean up the interval we created
-    clearInterval(this.interval);
-  },
   methods: {
+    /**
+     * Fetches articles from the API for the current page
+     */
     async loadArticles() {
       // asynchronously load articles
       // handle loading and error states
@@ -30,19 +35,27 @@ export default {
         // clear existing articles
         this.articles = [];
         const results = await axios.get(
-          `http://localhost/articles?page=${this.currentPage}`
+          `${API_ENDPOINTS.articles}?page=${this.currentPage}`
         );
+        console.log(results.data); //asdf
         this.articles = results.data;
       } catch (error) {
+        console.error(error);
         this.error = error.message || "An error occurred";
       } finally {
         this.isLoading = false;
       }
     },
+    /**
+     * Increments the page number and loads the next page of articles
+     */
     async loadNextPage() {
       this.currentPage++;
       await this.loadArticles();
     },
+    /**
+     * Decrements the page number and loads the previous page of articles
+     */
     async loadPreviousPage() {
       this.currentPage--;
       await this.loadArticles();

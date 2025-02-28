@@ -1,24 +1,33 @@
 <script>
 import ArticleForm from "./ArticleForm.vue";
 import axios from "axios";
+import { API_ENDPOINTS } from "@/config";
 
+/**
+ * @component ArticleUpdate
+ * @description A component that handles the updating of existing articles.
+ * It fetches the article data, displays it in a form, and handles the update submission.
+ */
 export default {
   data() {
     return {
-      article: null,
-      isLoading: true,
-      error: null,
-      articleId: this.$route.params.id,
-      success: null,
+      article: null, // The article data being edited
+      isLoading: true, // Loading state flag
+      error: null, // Error message storage
+      articleId: this.$route.params.id, // ID of the article from route params
+      success: null, // Success message storage
     };
   },
   components: {
     ArticleForm,
   },
+  /**
+   * Fetches the article data when the component is mounted
+   */
   async mounted() {
     try {
       const response = await axios.get(
-        `http://localhost/articles/${this.articleId}`
+        `${API_ENDPOINTS.articles}/${this.articleId}`
       );
       this.article = response.data;
     } catch (error) {
@@ -28,11 +37,15 @@ export default {
     }
   },
   methods: {
+    /**
+     * Updates an article with the provided data
+     * @param {Object} articleData - The updated article data
+     */
     async updateArticle(articleData) {
       try {
         this.isLoading = true;
         await axios.put(
-          `http://localhost/articles/${this.articleId}`,
+          `${API_ENDPOINTS.articles}/${this.articleId}`,
           articleData
         );
         this.success = "Article updated";

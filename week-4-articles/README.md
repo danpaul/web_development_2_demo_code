@@ -12,7 +12,11 @@ After the API is up and running, run the following to get started:
 
 `npm run dev`
 
-The main files are:
+Import files:
 
 - `src/main.js` - create the router
 - `src/App.vue` - main template
+- `src/components/ArticleTable.vue` - display the articles
+- `src/components/ArticleForm.vue` - create and edit articles
+- `src/components/ArticleCreate.vue` - create articles
+- `src/components/ArticleEdit.vue` - edit articles
