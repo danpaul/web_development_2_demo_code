@@ -12,11 +12,17 @@ After the API is up and running, run the following to get started:
 
 `npm run dev`
 
-Import files:
+Important files related to API requests:
 
-- `src/main.js` - create the router
-- `src/App.vue` - main template
 - `src/components/ArticleTable.vue` - display the articles
-- `src/components/ArticleForm.vue` - create and edit articles
 - `src/components/ArticleCreate.vue` - create articles
 - `src/components/ArticleEdit.vue` - edit articles
+- `src/components/ArticleForm.vue` - general component used for creating and editing articles
+
+There are some refactored components that better handle loading, success and error states for article updates. You can view these by going to `/articles-improved/[article ID]`
+
+These are the main components involved in the refactor:
+
+- `src/components/ArticleUpdateImproved.vue`
+- `src/components/Notification.vue`
+- `src/components/Loading.vue`

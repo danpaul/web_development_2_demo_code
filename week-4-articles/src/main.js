@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "./components/Home.vue";
 import About from "./components/About.vue";
 import ArticleUpdate from "./components/ArticleUpdate.vue";
+import ArticleUpdateImproved from "./components/ArticleUpdateImproved.vue";
 import ArticleCreate from "./components/ArticleCreate.vue";
 
 import "./assets/main.css";
@@ -25,6 +26,10 @@ const routes = [
   {
     path: "/articles/:id",
     component: ArticleUpdate,
+  },
+  {
+    path: "/articles-improved/:id",
+    component: ArticleUpdateImproved,
   },
 ];
 
