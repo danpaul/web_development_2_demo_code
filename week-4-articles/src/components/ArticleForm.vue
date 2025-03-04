@@ -1,3 +1,38 @@
+<script>
+export default {
+  props: {
+    initialArticle: {
+      type: Object,
+      default: () => ({
+        id: null,
+        title: "",
+        content: "",
+        author: "",
+        posted_at: new Date().toISOString(),
+      }),
+    },
+  },
+  data() {
+    return {
+      article: { ...this.initialArticle },
+    };
+  },
+  computed: {
+    formattedPostedAt() {
+      return this.article.posted_at ? this.article.posted_at.slice(0, 16) : "";
+    },
+  },
+  methods: {
+    updatePostedAt(event) {
+      this.article.posted_at = new Date(event.target.value).toISOString();
+    },
+    submitForm() {
+      this.$emit("submitForm", { ...this.article });
+    },
+  },
+};
+</script>
+
 <template>
   <form @submit.prevent="submitForm" class="container mt-3">
     <div class="mb-3">
@@ -49,38 +84,3 @@
     </button>
   </form>
 </template>
-
-<script>
-export default {
-  props: {
-    initialArticle: {
-      type: Object,
-      default: () => ({
-        id: null,
-        title: "",
-        content: "",
-        author: "",
-        posted_at: new Date().toISOString(),
-      }),
-    },
-  },
-  data() {
-    return {
-      article: { ...this.initialArticle },
-    };
-  },
-  computed: {
-    formattedPostedAt() {
-      return this.article.posted_at ? this.article.posted_at.slice(0, 16) : "";
-    },
-  },
-  methods: {
-    updatePostedAt(event) {
-      this.article.posted_at = new Date(event.target.value).toISOString();
-    },
-    submitForm() {
-      this.$emit("submitForm", { ...this.article });
-    },
-  },
-};
-</script>

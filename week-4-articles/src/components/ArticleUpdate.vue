@@ -25,19 +25,22 @@ export default {
    * Fetches the article data when the component is mounted
    */
   async mounted() {
-    try {
-      this.isLoading = true;
-      const response = await axios.get(
-        `${API_ENDPOINTS.articles}/${this.articleId}`
-      );
-      this.article = response.data;
-    } catch (error) {
-      this.error = error.message || "An error occurred";
-    } finally {
-      this.isLoading = false;
-    }
+    await this.loadArticle();
   },
   methods: {
+    async loadArticle() {
+      try {
+        this.isLoading = true;
+        const response = await axios.get(
+          `${API_ENDPOINTS.articles}/${this.articleId}`
+        );
+        this.article = response.data;
+      } catch (error) {
+        this.error = error.message || "An error occurred";
+      } finally {
+        this.isLoading = false;
+      }
+    },
     /**
      * Updates an article with the provided data
      * @param {Object} articleData - The updated article data
@@ -45,10 +48,11 @@ export default {
     async updateArticle(articleData) {
       try {
         this.isLoading = true;
-        await axios.put(
+        const response = await axios.put(
           `${API_ENDPOINTS.articles}/${this.articleId}`,
           articleData
         );
+        this.article = response.data;
         this.success = "Article updated";
       } catch (error) {
         console.error(error);
