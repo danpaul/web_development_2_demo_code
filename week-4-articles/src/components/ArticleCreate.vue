@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       article: null, // The article data being created
-      isLoading: true, // Loading state flag
+      isLoading: false, // Loading state flag
       error: null, // Error message storage
       articleId: this.$route.params.id, // ID from route params (if applicable)
       success: null, // Success message storage
@@ -20,21 +20,6 @@ export default {
   },
   components: {
     ArticleForm,
-  },
-  /**
-   * Fetches any necessary initial data when the component is mounted
-   */
-  async mounted() {
-    try {
-      const response = await axios.get(
-        `${API_ENDPOINTS.articles}/${this.articleId}`
-      );
-      this.article = response.data;
-    } catch (error) {
-      this.error = error.message || "An error occurred";
-    } finally {
-      this.isLoading = false;
-    }
   },
   methods: {
     /**
