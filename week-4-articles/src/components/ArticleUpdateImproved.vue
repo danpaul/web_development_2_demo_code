@@ -69,7 +69,7 @@ export default {
   <Notification
     v-if="error"
     :isError="true"
-    v-on:close="
+    @close="
       () => {
         error = '';
       }
@@ -79,7 +79,7 @@ export default {
   <Notification
     v-if="success"
     :isError="false"
-    v-on:close="
+    @close="
       () => {
         success = '';
       }

@@ -2,7 +2,6 @@
 export default {
   props: {
     isError: Boolean,
-    onClose: Function,
   },
 };
 </script>
@@ -22,11 +21,7 @@ export default {
       type="button"
       class="btn-close"
       aria-label="Close"
-      @click="
-        () => {
-          onClose && onClose();
-        }
-      "
+      @click="$emit('close')"
     ></button>
   </div>
 </template>
