@@ -1,0 +1,23 @@
+<script>
+export default {};
+</script>
+<template>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <RouterLink to="/" class="navbar-brand">Article App</RouterLink>
+      <div class="navbar-nav ms-auto">
+        <RouterLink class="nav-item nav-link" to="/article"
+          >Add New Article</RouterLink
+        >
+        <RouterLink class="nav-item nav-link" to="/auth"
+          >Login/Register</RouterLink
+        >
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <main>
+      <RouterView />
+    </main>
+  </div>
+</template>
