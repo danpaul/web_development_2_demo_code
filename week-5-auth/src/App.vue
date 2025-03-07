@@ -12,6 +12,7 @@ export default {};
         <RouterLink class="nav-item nav-link" to="/auth"
           >Login/Register</RouterLink
         >
+        <RouterLink class="nav-item nav-link" to="/profile">Profile</RouterLink>
       </div>
     </div>
   </nav>

@@ -16,3 +16,6 @@ Important files related to auth:
 
 - `src/components/Auth.vue` - handles login and registration
 - `src/components/ArticleUpdateImproved.vue` - reference for loading and error states/components
+- `src/utils/auth.js` - auth utils
+- `src/main.js` - init Axios auth headers
+- `src/components/Profile.vue` - displays user data from authenticated endpoint

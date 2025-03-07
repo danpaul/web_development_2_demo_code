@@ -5,11 +5,19 @@ import ArticleUpdate from "./components/ArticleUpdate.vue";
 import ArticleUpdateImproved from "./components/ArticleUpdateImproved.vue";
 import ArticleCreate from "./components/ArticleCreate.vue";
 import Auth from "./components/Auth.vue";
+import Profile from "./components/Profile.vue";
+import { getAuthToken, setAuthToken } from "@/utils/auth";
 
 import "./assets/main.css";
 
 import { createApp } from "vue";
 import App from "./App.vue";
+
+// Initialize auth token if it exists
+const token = getAuthToken();
+if (token) {
+  setAuthToken(token);
+}
 
 const routes = [
   {
@@ -35,6 +43,10 @@ const routes = [
   {
     path: "/auth",
     component: Auth,
+  },
+  {
+    path: "/profile",
+    component: Profile,
   },
 ];
 

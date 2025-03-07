@@ -1,5 +1,9 @@
 <script>
 import { API_ENDPOINTS } from "@/config";
+import axios from "axios";
+import Notification from "./Notification.vue";
+import Loading from "./Loading.vue";
+import { setAuthToken } from "@/utils/auth";
 
 export default {
   name: "Auth",
@@ -11,7 +15,13 @@ export default {
         password: "",
       },
       error: null,
+      isLoading: false,
+      success: null,
     };
+  },
+  components: {
+    Notification,
+    Loading,
   },
   methods: {
     toggleAuthMode() {
@@ -22,6 +32,7 @@ export default {
       this.formData.password = "";
     },
     async handleSubmit() {
+      // console.log("handleSubmit");
       try {
         this.error = null;
         this.isLoading = true;
@@ -29,10 +40,22 @@ export default {
           ? API_ENDPOINTS.auth + "/login"
           : API_ENDPOINTS.auth + "/register";
 
-        // make the api call to the endpoint
-        // handle loading state and success response
+        const response = await axios.post(endpoint, this.formData);
+
+        if (this.isLogin) {
+          this.success = "Login successful";
+          localStorage.setItem("token", response.data.token);
+          setAuthToken(response.data.token);
+          this.$router.push("/profile");
+        } else {
+          this.success = "Register successful";
+          this.isLogin = true;
+        }
       } catch (error) {
-        this.error = error.message || "An error occurred during authentication";
+        console.error(error);
+        this.error =
+          error?.response?.data?.error ||
+          "An error occurred during authentication";
       } finally {
         this.isLoading = false;
       }
@@ -42,6 +65,10 @@ export default {
 </script>
 
 <template>
+  <Loading v-if="isLoading" />
+  <Notification v-if="success" :isError="false" @close="success = null">
+    {{ success }}
+  </Notification>
   <div class="row justify-content-center align-items-center min-vh-100 m-0">
     <div class="col-12 col-md-6 col-lg-4">
       <div class="card shadow">
@@ -79,19 +106,18 @@ export default {
                 placeholder="Enter your password"
               />
             </div>
-
-            <button
-              type="submit"
-              class="btn btn-primary w-100"
-              @click="handleSubmit"
-            >
+            <button type="submit" class="btn btn-primary w-100">
               {{ isLogin ? "Login" : "Register" }}
             </button>
           </form>
-
-          <div v-if="error" class="alert alert-danger mt-3" role="alert">
+          <Notification
+            v-if="error"
+            :isError="true"
+            @close="error = null"
+            class="mt-3"
+          >
             {{ error }}
-          </div>
+          </Notification>
         </div>
       </div>
     </div>
