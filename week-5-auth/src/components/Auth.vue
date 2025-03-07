@@ -1,3 +1,44 @@
+<script>
+export default {
+  name: "Auth",
+  data() {
+    return {
+      isLogin: true,
+      formData: {
+        email: "",
+        password: "",
+      },
+      error: null,
+    };
+  },
+  methods: {
+    toggleAuthMode() {
+      this.isLogin = !this.isLogin;
+      this.error = null;
+      this.isLoading = false;
+      this.formData.email = "";
+      this.formData.password = "";
+    },
+    async handleSubmit() {
+      try {
+        this.error = null;
+        this.isLoading = true;
+        const endpoint = this.isLogin ? "/auth/login" : "/auth/register";
+
+        // relevant endpoints: API_ENDPOINTS.auth
+
+        // Here you would typically make an API call to your backend
+        console.log("Submitting to:", endpoint, this.formData);
+      } catch (error) {
+        this.error = error.message || "An error occurred during authentication";
+      } finally {
+        this.isLoading = false;
+      }
+    },
+  },
+};
+</script>
+
 <template>
   <div class="row justify-content-center align-items-center min-vh-100 m-0">
     <div class="col-12 col-md-6 col-lg-4">
@@ -54,44 +95,5 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "Auth",
-  data() {
-    return {
-      isLogin: true,
-      formData: {
-        email: "",
-        password: "",
-      },
-      error: null,
-    };
-  },
-  methods: {
-    toggleAuthMode() {
-      this.isLogin = !this.isLogin;
-      this.error = null;
-      this.isLoading = false;
-      this.formData.email = "";
-      this.formData.password = "";
-    },
-    async handleSubmit() {
-      try {
-        this.error = null;
-        this.isLoading = true;
-        const endpoint = this.isLogin ? "/auth/login" : "/auth/register";
-
-        // Here you would typically make an API call to your backend
-        console.log("Submitting to:", endpoint, this.formData);
-      } catch (error) {
-        this.error = error.message || "An error occurred during authentication";
-      } finally {
-        this.isLoading = false;
-      }
-    },
-  },
-};
-</script>
 
 <style scoped></style>
