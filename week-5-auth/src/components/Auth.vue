@@ -1,4 +1,6 @@
 <script>
+import { API_ENDPOINTS } from "@/config";
+
 export default {
   name: "Auth",
   data() {
@@ -23,12 +25,12 @@ export default {
       try {
         this.error = null;
         this.isLoading = true;
-        const endpoint = this.isLogin ? "/auth/login" : "/auth/register";
+        const endpoint = this.isLogin
+          ? API_ENDPOINTS.auth + "/login"
+          : API_ENDPOINTS.auth + "/register";
 
-        // relevant endpoints: API_ENDPOINTS.auth
-
-        // Here you would typically make an API call to your backend
-        console.log("Submitting to:", endpoint, this.formData);
+        // make the api call to the endpoint
+        // handle loading state and success response
       } catch (error) {
         this.error = error.message || "An error occurred during authentication";
       } finally {
