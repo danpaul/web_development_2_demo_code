@@ -25,7 +25,6 @@ export const useAuthStore = defineStore("auth", {
       } catch (error) {
         this.error =
           error.response?.data?.message || "Failed to fetch user data";
-        throw error;
       } finally {
         this.loading = false;
       }
@@ -48,7 +47,6 @@ export const useAuthStore = defineStore("auth", {
         return response;
       } catch (error) {
         this.error = error.response?.data?.message || "Registration failed";
-        throw error;
       } finally {
         this.loading = false;
       }
@@ -71,7 +69,6 @@ export const useAuthStore = defineStore("auth", {
         return response;
       } catch (error) {
         this.error = error.response?.data?.message || "Login failed";
-        throw error;
       } finally {
         this.loading = false;
       }
