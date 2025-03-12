@@ -1,9 +1,7 @@
 <script>
-import { API_ENDPOINTS } from "@/config";
-import axios from "axios";
+import { useAuthStore } from "@/stores/auth";
 import Notification from "./Notification.vue";
 import Loading from "./Loading.vue";
-import { setAuthToken } from "@/utils/auth";
 
 export default {
   name: "Auth",
@@ -14,8 +12,6 @@ export default {
         email: "",
         password: "",
       },
-      error: null,
-      isLoading: false,
       success: null,
     };
   },
@@ -23,41 +19,33 @@ export default {
     Notification,
     Loading,
   },
+  setup() {
+    const authStore = useAuthStore();
+    return { authStore };
+  },
+  computed: {
+    error() {
+      return this.authStore.getError;
+    },
+    isLoading() {
+      return this.authStore.isLoading;
+    },
+  },
   methods: {
     toggleAuthMode() {
       this.isLogin = !this.isLogin;
-      this.error = null;
-      this.isLoading = false;
+      this.success = null;
       this.formData.email = "";
       this.formData.password = "";
     },
     async handleSubmit() {
-      // console.log("handleSubmit");
-      try {
-        this.error = null;
-        this.isLoading = true;
-        const endpoint = this.isLogin
-          ? API_ENDPOINTS.auth + "/login"
-          : API_ENDPOINTS.auth + "/register";
-
-        const response = await axios.post(endpoint, this.formData);
-
-        if (this.isLogin) {
-          this.success = "Login successful";
-          localStorage.setItem("token", response.data.token);
-          setAuthToken(response.data.token);
-          this.$router.push("/profile");
-        } else {
-          this.success = "Register successful";
-          this.isLogin = true;
-        }
-      } catch (error) {
-        console.error(error);
-        this.error =
-          error?.response?.data?.error ||
-          "An error occurred during authentication";
-      } finally {
-        this.isLoading = false;
+      if (this.isLogin) {
+        await this.authStore.login(this.formData);
+        this.$router.push("/profile");
+      } else {
+        await this.authStore.register(this.formData);
+        this.success = "Register successful";
+        this.isLogin = true;
       }
     },
   },
@@ -113,7 +101,7 @@ export default {
           <Notification
             v-if="error"
             :isError="true"
-            @close="error = null"
+            @close="authStore.$patch({ error: null })"
             class="mt-3"
           >
             {{ error }}

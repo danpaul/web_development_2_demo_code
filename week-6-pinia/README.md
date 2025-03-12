@@ -18,3 +18,10 @@ Important files related to Pinia:
 - `src/stores/articles.js` - read later article store
 - `src/components/ArticleTable.vue` - use of store methods and data
 - `src/components/ReadLaterTable.vue` - using the store in a component
+
+Important files related to Pinia and Auth:
+
+- `src/stores/auth.js` - auth sore
+- `src/components/Auth.vue` - component to manage login and registration
+- `src/main.js` - initialize auth store and user
+- `src/App.vue` - dynamically updating navbar menu with login/logout depending on auth store
